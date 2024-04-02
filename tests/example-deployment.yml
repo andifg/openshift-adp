@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  namespace: playground
+  annotations:
+    backup.velero.io/backup-volumes: app-volume
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+      annotations:
+        backup.velero.io/backup-volumes: app-volume
+    spec:
+      containers:
+      - name: my-app-container
+        image: 'registry.access.redhat.com/ubi9/ubi-minimal:9.3'
+        command:
+          - sh
+          - -c
+          - while true; do echo "Hello, World!"; sleep 1; done
+        volumeMounts:
+        - name: app-volume
+          mountPath: /app
+      volumes:
+      - name: app-volume
+        persistentVolumeClaim:
+          claimName: my-app-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-app-pvc
+  namespace: playground
+spec:
+  storageClassName: nfs-csi
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi

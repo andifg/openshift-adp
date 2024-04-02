@@ -1,0 +1,30 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: velero
+  namespace: openshift-adp
+spec:
+  backupLocations:
+    - velero:
+        config:
+          profile: default
+          region: eu-central-1
+        credential:
+          key: cloud
+          name: aws-s3-creds
+        default: true
+        objectStorage:
+          bucket: coffee-app-test-backups
+          prefix: velero
+        provider: aws
+  configuration:
+    nodeAgent:
+      enable: true
+      uploaderType: restic
+    velero:
+      defaultPlugins:
+        - openshift
+        - csi
+        - aws
+    featureFlags:
+      - EnableCSI
