@@ -1,7 +1,7 @@
 apiVersion: velero.io/v1
 kind: Backup
 metadata:
-  name: playground-backup
+  name: playground-backup-6
   namespace: openshift-adp
 spec:
   includedNamespaces:
@@ -9,9 +9,7 @@ spec:
   includedResources:
     - pv
     - pvc
-    - pod
-    - VolumeSnapshot
-    - VolumeSnapshotContent
+    - VolumeSnapshotContents
+    - VolumeSnapshots
   storageLocation: 'velero-1'
   snapshotVolumes: true
-  snapshotMoveData: true
