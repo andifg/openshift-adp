@@ -13,3 +13,4 @@ spec:
     - VolumeSnapshots
   storageLocation: 'velero-1'
   snapshotVolumes: true
+  snapshotMoveData: true
