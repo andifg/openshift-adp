@@ -1,10 +1,10 @@
 apiVersion: velero.io/v1
 kind: Restore
 metadata:
-  name: restore
+  name: restore4
   namespace: openshift-adp
 spec:
-  backupName: playground-backup
+  backupName: playground-backup4
   excludedResources:
     - nodes
     - events
@@ -16,4 +16,3 @@ spec:
     - volumeattachments.storage.k8s.io
     - backuprepositories.velero.io
   itemOperationTimeout: 4h0m0s
-  restorePVs: false
