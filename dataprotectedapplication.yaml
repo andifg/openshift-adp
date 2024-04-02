@@ -26,5 +26,3 @@ spec:
         - openshift
         - csi
         - aws
-    featureFlags:
-      - EnableCSI
