@@ -1,0 +1,20 @@
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: schedule
+  namespace: openshift-adp
+spec:
+  schedule: '*/5 * * * *'
+  template:
+    includedNamespaces:
+      - playground
+    orLabelSelectors:
+      - matchExpressions:
+          - key: backup
+            operator: In
+            values:
+              - 'true'
+    snapshotMoveData: true
+    storageLocation: 'velero-1'
+    ttl: 24h
